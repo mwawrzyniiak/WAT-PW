@@ -55,6 +55,22 @@ public class Car {
         this.fuel = fuel;
     }
 
+    public void deincrementFuel() {
+        fuel--;
+    }
+
+    public void incrementFuel() {
+        fuel++;
+    }
+
+    public boolean isFuelEmpty() {
+        boolean isEmpty = false;
+        if(getFuel() == 0) {
+            isEmpty = true;
+        }
+        return isEmpty;
+    }
+
     @Override
     public String toString() {
         return "Car{" +

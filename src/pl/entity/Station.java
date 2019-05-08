@@ -14,14 +14,14 @@ public class Station extends Thread{
         }
     }
 
+    public Distributor getDistributor(int ID) {
+        return distributors[ID];
+    }
+
     public void toStringDistributors() {
         for(int i = 0; i < distributors.length; i++) {
             System.out.println("Distributor ID: " + distributors[i].getDispenserID() + ", have: " + distributors[i].getDispenserCapacity() + " fuel!");
         }
-    }
-
-    public Distributor getDistributor(int ID) {
-        return distributors[ID];
     }
 
 }

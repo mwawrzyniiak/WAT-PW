@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Distributor {
 
-    private int dispenserCapacity;                  //pojemność dystrybutora
+    private int dispenserCapacity;                  //aktualna pojemność dystrybutora [max 1000]
     private int dispenserID;                        //Unikalne ID dystrybutora
     private static int lastDispenserID = 1;         //Zmienna pomocnicza do wyznaczania kolejnego ID
 
@@ -31,17 +31,22 @@ public class Distributor {
         return dispenserID;
     }
 
-    public boolean isDistributorEmpty(Distributor distributor) {
-        boolean isEmpty = true;
-        if(distributor.getDispenserCapacity() == 0) {
-            isEmpty = false;
+    public boolean isDistributorEmpty() {
+        boolean isEmpty = false;
+        if(getDispenserCapacity() == 0) {
+            isEmpty = true;
         }
         return isEmpty;
     }
 
     public void deincrementFuel() {
-        this.dispenserCapacity = dispenserCapacity-1;
+        dispenserCapacity--;
     }
+
+    public void incrementFuel() {
+        dispenserCapacity++;
+    }
+
 
     @Override
     public String toString() {
