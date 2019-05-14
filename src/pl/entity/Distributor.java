@@ -2,11 +2,14 @@ package pl.entity;
 
 import java.util.Random;
 
-public class Distributor {
+public class Distributor extends Thread {
 
     private int dispenserCapacity;                  //aktualna pojemność dystrybutora [max 1000]
     private int dispenserID;                        //Unikalne ID dystrybutora
     private static int lastDispenserID = 1;         //Zmienna pomocnicza do wyznaczania kolejnego ID
+    private boolean WORK_STATUS = true;
+
+    private Random random = new Random();
 
     public Distributor() {
         dispenserCapacity = setRandomDispenserCapacity();
@@ -47,6 +50,16 @@ public class Distributor {
         dispenserCapacity++;
     }
 
+    public void run() {
+        while(WORK_STATUS) {
+            System.out.println("Dystrybutor: " + dispenserID);
+            try {
+                Thread.sleep(random.nextInt(1500) + 500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @Override
     public String toString() {
