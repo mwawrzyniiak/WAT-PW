@@ -9,36 +9,15 @@ package pl.entity;
 */
 
 import java.util.LinkedList;
-import java.util.Random;
 
 //TODO: sekcja krytyczna
 //Sekcja krytyczna
-public class DistributorQueue extends Thread{
-
-    private static final boolean WORK = true;
+public class DistributorQueue {
 
     private LinkedList<Car> distributorQueueForcar = new LinkedList<Car>();
     private Integer QUEUE_ID;
-    private Random random = new Random();
 
     public DistributorQueue(Integer QUEUE_ID) {
         this.QUEUE_ID = QUEUE_ID;
-    }
-
-    public void run() {
-        while(WORK) {
-            canITakeCar();
-            try {
-                Thread.sleep(random.nextInt(1500) + 500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    //TODO: SPRAWDZA CZY JEST DOSTEPNY SAMOCHOD
-    public boolean canITakeCar() {
-        System.out.println("SPRAWDZAM CZY MOGE WZIAC SAMOCHOD" + QUEUE_ID);
-        return true;
     }
 }
