@@ -4,6 +4,8 @@ import java.util.Random;
 
 public class Car {
 
+    private static String shortcuts[] = {"WPN", "WP", "WO", "WP", "WW", "WSI", "PK", "PN", "PGO", "LB", "LLB", "GD", "GKW", "EP", "ERA", "CLI", "CBR", "DJ", "DOL"};
+
     private String registration;    //numer rejestracyjny
     private int tankCapacity;       //pojemność baku
     private int fuel;               //aktualna ilosc paliwa w baku
@@ -33,7 +35,6 @@ public class Car {
 
     private String setTrueRegistration() {
         String RadomRegistration;
-        String shortcuts[] = {"WPN", "WP", "WO", "WP", "WW", "WSI", "PK", "PN", "PGO", "LB", "LLB", "GD", "GKW", "EP", "ERA", "CLI", "CBR", "DJ", "DOL"};
 
         RadomRegistration = shortcuts[new Random().nextInt(shortcuts.length)] + "-" + (new Random().nextInt(3000) + 1000);
         return RadomRegistration;

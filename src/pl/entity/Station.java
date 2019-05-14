@@ -1,5 +1,6 @@
 package pl.entity;
 
+
 public class Station extends Thread{
 
     private Distributor[] distributors = new Distributor[16];
