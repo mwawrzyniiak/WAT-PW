@@ -1,5 +1,6 @@
 package pl.entity;
 
+import java.util.LinkedList;
 import java.util.Random;
 
 public class Distributor extends Thread {
@@ -7,19 +8,21 @@ public class Distributor extends Thread {
     private int dispenserCapacity;                  //aktualna pojemność dystrybutora [max 1000]
     private int dispenserID;                        //Unikalne ID dystrybutora
     private static int lastDispenserID = 1;         //Zmienna pomocnicza do wyznaczania kolejnego ID
-    private boolean WORK_STATUS = true;
+    private boolean WORK_STATUS = false;
+    private DistributorQueue distributorQueues;
 
     private Random random = new Random();
 
-    public Distributor() {
+    public Distributor(DistributorQueue distributorQueues) {
         dispenserCapacity = setRandomDispenserCapacity();
         dispenserID = lastDispenserID;
         incrementID();
+        this.distributorQueues = distributorQueues;
     }
 
     private int setRandomDispenserCapacity() {
         Random randomDispenserCapacity = new Random();
-        return randomDispenserCapacity.nextInt(500) + 500;
+        return randomDispenserCapacity.nextInt(1500) + 1500;
     }
 
     private void incrementID() {
@@ -51,12 +54,36 @@ public class Distributor extends Thread {
     }
 
     public void run() {
-        while(WORK_STATUS) {
-            System.out.println("Dystrybutor: " + dispenserID);
+        while(true) {
+
+            //sekcja glowna
+            while(WORK_STATUS) {
+                System.out.println("Dystrybutor: " + dispenserID + " Posiada w kolejce samochody do obsluzenia!");
+
+                try {
+                    Thread.sleep(random.nextInt(1000) + 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                //jezeli kolejka jest pusta wychodzi z sekcji glownej
+                if(distributorQueues.isEmpty()) {
+                    WORK_STATUS = false;
+                }
+            }
+
             try {
-                Thread.sleep(random.nextInt(1500) + 500);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            }
+
+            System.out.println("KOLEJKA DO DYSTRYBUTORA: " + dispenserID + " JEST PUSTA!");
+            //Jezeli kolejka nie jest pusta pozwala wejsc do sekji glownej
+            if(distributorQueues.isEmpty()) {
+                WORK_STATUS = false;
+            } else {
+                WORK_STATUS = true;
             }
         }
     }

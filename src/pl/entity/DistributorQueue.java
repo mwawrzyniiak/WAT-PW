@@ -14,10 +14,26 @@ import java.util.LinkedList;
 //Sekcja krytyczna
 public class DistributorQueue {
 
-    private LinkedList<Car> distributorQueueForcar = new LinkedList<Car>();
+    private LinkedList<Car> distributorQueueForCar = new LinkedList<Car>();
+
     private Integer QUEUE_ID;
 
     public DistributorQueue(Integer QUEUE_ID) {
         this.QUEUE_ID = QUEUE_ID;
+    }
+
+    public boolean isEmpty() {
+        boolean status = false;
+        status = distributorQueueForCar.isEmpty();
+        return status;
+    }
+
+    //METODO KTORA POWSTALA TYLKO DO TESTOW!
+    public void addCarToQueue(Car car) {
+        distributorQueueForCar.add(car);
+    }
+
+    public String toString() {
+        return "KOLEJKA: " + QUEUE_ID;
     }
 }
