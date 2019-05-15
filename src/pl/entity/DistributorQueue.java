@@ -10,6 +10,7 @@ package pl.entity;
 
 import java.util.LinkedList;
 
+//TODO: JAKIE DYSTRYBUTORY NALEZA DO DISTRIBUTO_RQUEUE
 //TODO: sekcja krytyczna
 //Sekcja krytyczna
 public class DistributorQueue {
@@ -21,6 +22,7 @@ public class DistributorQueue {
     public DistributorQueue(Integer QUEUE_ID) {
         this.QUEUE_ID = QUEUE_ID;
     }
+
 
     public boolean isEmpty() {
         boolean status = false;
@@ -34,6 +36,7 @@ public class DistributorQueue {
     }
 
     public String toString() {
-        return "KOLEJKA: " + QUEUE_ID;
+        return "Kolejka nr: " + QUEUE_ID;
     }
+
 }

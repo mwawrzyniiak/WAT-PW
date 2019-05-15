@@ -24,6 +24,10 @@ public class CarGenerator extends Thread{
 
     //TODO: sprawdzanie czy mozna jakis samochod przyjechac do kolejki
     public void run() {
+        System.out.println("---");
+        System.out.println("CAR GENERATOR THREAD RUN!");
+        System.out.println("---");
+
         while(true) {
             while(!isQueueFull) {
                 cars[countOfCar] = new Car();
@@ -34,7 +38,7 @@ public class CarGenerator extends Thread{
                     e.printStackTrace();
                 }
 
-                distributorQueues.get(randomQueueValue()).addCarToQueue(cars[countOfCar]);
+                distributorQueues.get(value).addCarToQueue(cars[countOfCar]);
                 System.out.println("Dodałem samochod do kolejki: " + distributorQueues.get(value).toString());
             }
 

@@ -11,6 +11,18 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         Main main = new Main();
+
+        List<Integer> testList = new LinkedList<>();
+        testList.add(1);
+        testList.add(2);
+        testList.add(3);
+        testList.add(4);
+        testList.add(5);
+        testList.add(6);
+
+        System.out.println(testList);
+
+
         //Generowanie sekcji krytycznej
         List<DistributorQueue> distributorQueues = main.createDistributorQueue();
 
@@ -20,11 +32,13 @@ public class Main {
         //WĄTEK GENEROWANIA SAMOCHODOW
         CarGenerator carGenerator = new CarGenerator(distributorQueues);
 
+        //uruchomienie wszystkich dystrybutorow
+        main.distributorThreadStart(distributorList);
+
         //uruchomienie generowania samochodow
         carGenerator.start();
 
-        //uruchomienie wszystkich dystrybutorow
-        main.distributorThreadStart(distributorList);
+
     }
 
     private List<DistributorQueue> createDistributorQueue() {
@@ -49,7 +63,7 @@ public class Main {
         return distributorQueues;
     }
 
-    public List<Distributor> createDistributorsWithQueue(List<DistributorQueue> distributorQueues) {
+    private List<Distributor> createDistributorsWithQueue(List<DistributorQueue> distributorQueues) {
         //WĄTKI DYSTRYBUTORÓW
         List<Distributor> distributorsList = new LinkedList<>();
         Distributor distributor1 = new Distributor(distributorQueues.get(0));
@@ -89,24 +103,11 @@ public class Main {
         return distributorsList;
     }
 
-    public void distributorThreadStart(List<Distributor> distributors) {
-        distributors.get(0).start();
-        distributors.get(1).start();
-        distributors.get(2).start();
-        distributors.get(3).start();
-        distributors.get(4).start();
-        distributors.get(5).start();
-        distributors.get(6).start();
-        distributors.get(7).start();
-        distributors.get(8).start();
-        distributors.get(9).start();
-        distributors.get(10).start();
-        distributors.get(11).start();
-        distributors.get(12).start();
-        distributors.get(13).start();
-        distributors.get(14).start();
-        distributors.get(15).start();
-
+    private void distributorThreadStart(List<Distributor> distributors) {
+        for (Distributor distributor : distributors) {
+            distributor.start();
+            System.out.println("Distributor Thread: " + distributor.getDispenserID() + " START!");
+        }
     }
 
 

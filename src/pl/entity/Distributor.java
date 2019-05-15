@@ -1,6 +1,5 @@
 package pl.entity;
 
-import java.util.LinkedList;
 import java.util.Random;
 
 public class Distributor extends Thread {
@@ -54,11 +53,11 @@ public class Distributor extends Thread {
     }
 
     public void run() {
-        while(true) {
+        while (true) {
 
             //sekcja glowna
-            while(WORK_STATUS) {
-                System.out.println("Dystrybutor: " + dispenserID + " Posiada w kolejce samochody do obsluzenia!");
+            while (WORK_STATUS) {
+                System.out.println("Dystrybutor: " + dispenserID + " Posiada w kolejce samochody do obsluzenia!" + " Jego nr Kolejki to: " + distributorQueues.toString());
 
                 try {
                     Thread.sleep(random.nextInt(1000) + 1000);
@@ -67,9 +66,10 @@ public class Distributor extends Thread {
                 }
 
                 //jezeli kolejka jest pusta wychodzi z sekcji glownej
-                if(distributorQueues.isEmpty()) {
+                if (distributorQueues.isEmpty()) {
                     WORK_STATUS = false;
                 }
+
             }
 
             try {
@@ -78,14 +78,18 @@ public class Distributor extends Thread {
                 e.printStackTrace();
             }
 
-            System.out.println("KOLEJKA DO DYSTRYBUTORA: " + dispenserID + " JEST PUSTA!");
+            System.out.println("KOLEJKA DO DYSTRYBUTORA: " + dispenserID + " JEST PUSTA!" + " Jego nr Kolejki to: " + distributorQueues);
             //Jezeli kolejka nie jest pusta pozwala wejsc do sekji glownej
-            if(distributorQueues.isEmpty()) {
+            if (distributorQueues.isEmpty()) {
                 WORK_STATUS = false;
             } else {
                 WORK_STATUS = true;
             }
         }
+    }
+
+    public DistributorQueue getDistributorQueues() {
+        return distributorQueues;
     }
 
     @Override
