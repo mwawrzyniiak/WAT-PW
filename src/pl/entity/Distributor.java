@@ -57,19 +57,20 @@ public class Distributor extends Thread {
 
             //sekcja glowna
             while (WORK_STATUS) {
-                System.out.println("Dystrybutor: " + dispenserID + " Posiada w kolejce samochody do obsluzenia!" + " Jego nr Kolejki to: " + distributorQueues.toString());
-
-                try {
-                    Thread.sleep(random.nextInt(1000) + 1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
                 //jezeli kolejka jest pusta wychodzi z sekcji glownej
                 if (distributorQueues.isEmpty()) {
                     WORK_STATUS = false;
-                }
+                } else {
+                    System.out.println("Dystrybutor: " + dispenserID + " Posiada w kolejce samochody do obsluzenia!" + " Jego nr Kolejki to: " + distributorQueues.toString());
+                    //TODO: SYNCHRONIZACJA + POBIERANIE SAMOCHODÓW Z KOLEJKI PRZEZ DYSTRYBUTOR.
 
+
+                    try {
+                        Thread.sleep(random.nextInt(1000) + 1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             try {

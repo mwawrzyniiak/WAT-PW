@@ -9,13 +9,14 @@ package pl.entity;
 */
 
 import java.util.LinkedList;
+import java.util.Queue;
 
 //TODO: JAKIE DYSTRYBUTORY NALEZA DO DISTRIBUTO_RQUEUE
 //TODO: sekcja krytyczna
 //Sekcja krytyczna
 public class DistributorQueue {
 
-    private LinkedList<Car> distributorQueueForCar = new LinkedList<Car>();
+    private Queue<Car> distributorQueueForCar = new LinkedList<Car>();
 
     private Integer QUEUE_ID;
 
@@ -33,6 +34,17 @@ public class DistributorQueue {
     //METODO KTORA POWSTALA TYLKO DO TESTOW!
     public void addCarToQueue(Car car) {
         distributorQueueForCar.add(car);
+    }
+
+    //Metoda która pobiera pierwszy samochod w kolejce a nastepnie go usuwa z kolejki
+    public Car getCarFromQueue() {
+        Car carToPoll = null;
+        if(distributorQueueForCar.isEmpty()) {
+            System.out.println("ERROR- ''getCarFromQueue''- KOLEJKA JEST PUSTA! ");
+        } else {
+            carToPoll = distributorQueueForCar.poll();
+        }
+        return carToPoll;
     }
 
     public String toString() {
