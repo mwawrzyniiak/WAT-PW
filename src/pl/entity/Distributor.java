@@ -1,5 +1,8 @@
 package pl.entity;
 
+import pl.service.DistributorService;
+import pl.service.FuelSupplierService;
+
 import java.util.Random;
 
 public class Distributor extends Thread {
@@ -9,6 +12,7 @@ public class Distributor extends Thread {
     private static int lastDispenserID = 1;         //Zmienna pomocnicza do wyznaczania kolejnego ID
     private boolean WORK_STATUS = false;
     private DistributorQueue distributorQueues;
+    private FuelSupplierService fuelSupplierService = new FuelSupplierService();
 
     private Random random = new Random();
 
@@ -61,10 +65,10 @@ public class Distributor extends Thread {
                 if (distributorQueues.isEmpty()) {
                     WORK_STATUS = false;
                 } else {
-                    System.out.println("Dystrybutor: " + dispenserID + " Posiada w kolejce samochody do obsluzenia!" + " Jego nr Kolejki to: " + distributorQueues.toString());
+                    System.out.println("POBIERAM SAMOCHOD Z " + distributorQueues.toString());
                     //TODO: SYNCHRONIZACJA + POBIERANIE SAMOCHODÓW Z KOLEJKI PRZEZ DYSTRYBUTOR.
-
-
+                    Car car = distributorQueues.getCarFromQueue();
+                    tankCar(car, fuelSupplierService);
                     try {
                         Thread.sleep(random.nextInt(1000) + 1000);
                     } catch (InterruptedException e) {
@@ -91,6 +95,27 @@ public class Distributor extends Thread {
 
     public DistributorQueue getDistributorQueues() {
         return distributorQueues;
+    }
+
+    public void tankCar(Car c1, FuelSupplierService f1) {
+        if (c1.getFuel() == 0) {
+            while (c1.getFuel() != c1.getTankCapacity()) {
+                if (this.getDispenserCapacity() != 0) {
+                    this.deincrementFuel();
+                } else {
+                    f1.refuelingTheDistributor(this);
+                    this.deincrementFuel();
+                }
+
+                int value = c1.getFuel() + 1;
+                if (value == 0) {
+                    value = 1;
+                }
+                c1.setFuel(value);
+                System.out.println("TANKOWANIE - AKTUALNY STAN PALIWA SAMOCHODU: " + c1.getFuel());
+                System.out.println("TANKOWANIE - AKTUALNY STAN DYSTRYBUTORA: " + this.getDispenserCapacity());
+            }
+        }
     }
 
     @Override

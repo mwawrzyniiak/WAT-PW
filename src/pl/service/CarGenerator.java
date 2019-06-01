@@ -40,19 +40,25 @@ public class CarGenerator extends Thread{
 
                 distributorQueues.get(value).addCarToQueue(cars[countOfCar]);
                 System.out.println("Dodałem samochod do kolejki: " + distributorQueues.get(value).toString());
+                if (distributorQueues.size() == 4) {
+                    isQueueFull = true;
+                }
             }
 
             System.out.println("A lot of cars in queue to station!");
             try {
-                Thread.sleep(10000);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            }
+            if (distributorQueues.size() < 4) {
+                isQueueFull = false;
             }
         }
     }
 
     private long randomValueOfCarCome() {
-        return random.nextInt(2000) + 3000;
+        return random.nextInt(100) + 300;
     }
 
     private int randomQueueValue() {

@@ -26,12 +26,12 @@ public class DistributorQueue {
 
 
     public boolean isEmpty() {
-        boolean status = false;
+        boolean status;
         status = distributorQueueForCar.isEmpty();
         return status;
     }
 
-    //METODO KTORA POWSTALA TYLKO DO TESTOW!
+    //metodoa do dodawania samochodu do kolejki
     public void addCarToQueue(Car car) {
         distributorQueueForCar.add(car);
     }
@@ -39,7 +39,7 @@ public class DistributorQueue {
     //Metoda która pobiera pierwszy samochod w kolejce a nastepnie go usuwa z kolejki
     public Car getCarFromQueue() {
         Car carToPoll = null;
-        if(distributorQueueForCar.isEmpty()) {
+        if (distributorQueueForCar.isEmpty()) {
             System.out.println("ERROR- ''getCarFromQueue''- KOLEJKA JEST PUSTA! ");
         } else {
             carToPoll = distributorQueueForCar.poll();
