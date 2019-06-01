@@ -25,7 +25,7 @@ public class DistributorQueue {
     }
 
 
-    public boolean isEmpty() {
+    boolean isEmpty() {
         boolean status;
         status = distributorQueueForCar.isEmpty();
         return status;
@@ -37,7 +37,7 @@ public class DistributorQueue {
     }
 
     //Metoda która pobiera pierwszy samochod w kolejce a nastepnie go usuwa z kolejki
-    public Car getCarFromQueue() {
+    Car getCarFromQueue() {
         Car carToPoll = null;
         if (distributorQueueForCar.isEmpty()) {
             System.out.println("ERROR- ''getCarFromQueue''- KOLEJKA JEST PUSTA! ");

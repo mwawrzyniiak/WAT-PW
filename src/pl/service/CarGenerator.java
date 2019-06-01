@@ -30,19 +30,7 @@ public class CarGenerator extends Thread{
 
         while(true) {
             while(!isQueueFull) {
-                cars[countOfCar] = new Car();
-                int value = randomQueueValue();
-                try {
-                    Thread.sleep(randomValueOfCarCome());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                distributorQueues.get(value).addCarToQueue(cars[countOfCar]);
-                System.out.println("Dodałem samochod do kolejki: " + distributorQueues.get(value).toString());
-                if (distributorQueues.size() == 4) {
-                    isQueueFull = true;
-                }
+                addingCar();
             }
 
             System.out.println("A lot of cars in queue to station!");
@@ -54,6 +42,22 @@ public class CarGenerator extends Thread{
             if (distributorQueues.size() < 4) {
                 isQueueFull = false;
             }
+        }
+    }
+
+    private synchronized void addingCar() {
+        cars[countOfCar] = new Car();
+        int value = randomQueueValue();
+        try {
+            Thread.sleep(randomValueOfCarCome());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        distributorQueues.get(value).addCarToQueue(cars[countOfCar]);
+        System.out.println("Dodałem samochod do kolejki: " + distributorQueues.get(value).toString() + " Samochod: " + cars[countOfCar].toString());
+        if (distributorQueues.size() == 4) {
+            isQueueFull = true;
         }
     }
 

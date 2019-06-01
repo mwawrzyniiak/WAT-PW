@@ -48,7 +48,7 @@ public class Distributor extends Thread {
         return isEmpty;
     }
 
-    public void deincrementFuel() {
+    private void deincrementFuel() {
         dispenserCapacity--;
     }
 
@@ -62,19 +62,7 @@ public class Distributor extends Thread {
             //sekcja glowna
             while (WORK_STATUS) {
                 //jezeli kolejka jest pusta wychodzi z sekcji glownej
-                if (distributorQueues.isEmpty()) {
-                    WORK_STATUS = false;
-                } else {
-                    System.out.println("POBIERAM SAMOCHOD Z " + distributorQueues.toString());
-                    //TODO: SYNCHRONIZACJA + POBIERANIE SAMOCHODÓW Z KOLEJKI PRZEZ DYSTRYBUTOR.
-                    Car car = distributorQueues.getCarFromQueue();
-                    tankCar(car, fuelSupplierService);
-                    try {
-                        Thread.sleep(random.nextInt(1000) + 1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+                carService();
             }
 
             try {
@@ -83,12 +71,23 @@ public class Distributor extends Thread {
                 e.printStackTrace();
             }
 
-            System.out.println("KOLEJKA DO DYSTRYBUTORA: " + dispenserID + " JEST PUSTA!" + " Jego nr Kolejki to: " + distributorQueues);
+            //System.out.println("KOLEJKA DO DYSTRYBUTORA: " + dispenserID + " JEST PUSTA!" + " Jego nr Kolejki to: " + distributorQueues);
             //Jezeli kolejka nie jest pusta pozwala wejsc do sekji glownej
-            if (distributorQueues.isEmpty()) {
-                WORK_STATUS = false;
-            } else {
-                WORK_STATUS = true;
+            WORK_STATUS = !distributorQueues.isEmpty();
+        }
+    }
+
+    private synchronized void carService()  {
+        if (distributorQueues.isEmpty()) {
+            WORK_STATUS = false;
+        } else {
+            Car car = distributorQueues.getCarFromQueue();
+            System.out.println("POBIERAM SAMOCHOD Z " + distributorQueues.toString() + ", samochod: " + car.toString());
+            tankCar(car, fuelSupplierService);
+            try {
+                Thread.sleep(random.nextInt(1000) + 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -97,7 +96,7 @@ public class Distributor extends Thread {
         return distributorQueues;
     }
 
-    public void tankCar(Car c1, FuelSupplierService f1) {
+    private void tankCar(Car c1, FuelSupplierService f1)  {
         if (c1.getFuel() == 0) {
             while (c1.getFuel() != c1.getTankCapacity()) {
                 if (this.getDispenserCapacity() != 0) {
@@ -112,7 +111,12 @@ public class Distributor extends Thread {
                     value = 1;
                 }
                 c1.setFuel(value);
-                System.out.println("TANKOWANIE - AKTUALNY STAN PALIWA SAMOCHODU: " + c1.getFuel());
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("TANKOWANIE - AKTUALNY STAN PALIWA SAMOCHODU: " + c1.getFuel() + ", samochod: " + c1.toString());
                 System.out.println("TANKOWANIE - AKTUALNY STAN DYSTRYBUTORA: " + this.getDispenserCapacity());
             }
         }

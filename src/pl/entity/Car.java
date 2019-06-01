@@ -8,7 +8,7 @@ public class Car {
 
     private String registration;    //numer rejestracyjny
     private int tankCapacity;       //pojemność baku
-    private int fuel = 0;           //aktualna ilosc paliwa w baku
+    private int fuel;           //aktualna ilosc paliwa w baku
 
     private Random amountOfFuelGenerator = new Random();
 
@@ -16,6 +16,7 @@ public class Car {
         this.registration = setTrueRegistration();
         Random amountOfTankCapityGenerator = new Random();
         this.tankCapacity = amountOfTankCapityGenerator.nextInt(41) + 10; //losowanie liczb z przedziału od 10 do 50.
+        this.fuel = 0;
     }
 
 
