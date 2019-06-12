@@ -1,22 +1,17 @@
 package pl.entity;
-
-
 /*
     Kolejka do dystrybutora jest sekcją krytyczną.
     Każda para dystrybutorów n oraz n+1 posiada jedną, tą samą kolejkę
     Sekcja krytyczna obsługiwana jest przez Wątek generowania samohodow oraz przez wątek każdego dystrybutora.
     Ustalamy zasadę, że samochód zawsze podjeżdża pod dystrybutor który stoi dalej, i nie blokuje dystrybutora
 */
-
 import java.util.LinkedList;
 import java.util.Queue;
 
-//TODO: JAKIE DYSTRYBUTORY NALEZA DO DISTRIBUTO_RQUEUE
-//TODO: sekcja krytyczna
 //Sekcja krytyczna
 public class DistributorQueue {
 
-    private Queue<Car> distributorQueueForCar = new LinkedList<Car>();
+    private Queue<Car> distributorQueueForCar = new LinkedList<>();
 
     private Integer QUEUE_ID;
 
@@ -50,5 +45,4 @@ public class DistributorQueue {
     public String toString() {
         return "Kolejka nr: " + QUEUE_ID;
     }
-
 }

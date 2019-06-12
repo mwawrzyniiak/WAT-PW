@@ -4,13 +4,11 @@ import java.util.Random;
 
 public class Car {
 
-    private static String shortcuts[] = {"WPN", "WP", "WO", "WP", "WW", "WSI", "PK", "PN", "PGO", "LB", "LLB", "GD", "GKW", "EP", "ERA", "CLI", "CBR", "DJ", "DOL"};
+    private static String shortcuts[] = {"WPN", "WP", "WO", "WP", "WW", "WSI", "PK", "PN", "PGO", "LB", "LLB", "GD", "GKW", "EP", "ERA", "CLI", "CBR", "DJ", "DOL", "WS"};
 
     private String registration;    //numer rejestracyjny
     private int tankCapacity;       //pojemność baku
     private int fuel;           //aktualna ilosc paliwa w baku
-
-    private Random amountOfFuelGenerator = new Random();
 
     public Car() {
         this.registration = setTrueRegistration();
@@ -19,15 +17,11 @@ public class Car {
         this.fuel = 0;
     }
 
-
     private String setTrueRegistration() {
-        String RadomRegistration;
-
-        RadomRegistration = shortcuts[new Random().nextInt(shortcuts.length)] + "-" + (new Random().nextInt(3000) + 1000);
-        return RadomRegistration;
+        return shortcuts[new Random().nextInt(shortcuts.length)] + "-" + (new Random().nextInt(3000) + 1000);
     }
 
-    public int getTankCapacity() {
+    int getTankCapacity() {
         return tankCapacity;
     }
 

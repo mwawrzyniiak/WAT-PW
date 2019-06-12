@@ -1,6 +1,5 @@
 package pl;
 
-import pl.entity.Car;
 import pl.entity.Distributor;
 import pl.entity.DistributorQueue;
 import pl.service.CarGenerator;
@@ -11,17 +10,6 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         Main main = new Main();
-
-        List<Integer> testList = new LinkedList<>();
-        testList.add(1);
-        testList.add(2);
-        testList.add(3);
-        testList.add(4);
-        testList.add(5);
-        testList.add(6);
-
-        System.out.println(testList);
-
 
         //Generowanie sekcji krytycznej
         List<DistributorQueue> distributorQueues = main.createDistributorQueue();
@@ -37,8 +25,6 @@ public class Main {
 
         //uruchomienie generowania samochodow
         carGenerator.start();
-
-
     }
 
     private List<DistributorQueue> createDistributorQueue() {

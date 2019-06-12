@@ -8,10 +8,9 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
-public class CarGenerator extends Thread{
+public class CarGenerator extends Thread implements Runnable {
 
     private static int CAR_GENERATOR_LIMIT = 1000;
-    private static int countOfCar = 0;
 
     private Random random = new Random();
     private Car[] cars = new Car[CAR_GENERATOR_LIMIT];
@@ -22,14 +21,13 @@ public class CarGenerator extends Thread{
         this.distributorQueues = distributorQueues;
     }
 
-    //TODO: sprawdzanie czy mozna jakis samochod przyjechac do kolejki
     public void run() {
         System.out.println("---");
         System.out.println("CAR GENERATOR THREAD RUN!");
         System.out.println("---");
 
-        while(true) {
-            while(!isQueueFull) {
+        while (true) {
+            while (!isQueueFull) {
                 addingCar();
             }
 
@@ -46,6 +44,7 @@ public class CarGenerator extends Thread{
     }
 
     private synchronized void addingCar() {
+        int countOfCar = 0;
         cars[countOfCar] = new Car();
         int value = randomQueueValue();
         try {

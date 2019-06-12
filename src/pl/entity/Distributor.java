@@ -1,11 +1,9 @@
 package pl.entity;
 
-import pl.service.DistributorService;
 import pl.service.FuelSupplierService;
-
 import java.util.Random;
 
-public class Distributor extends Thread {
+public class Distributor extends Thread implements Runnable {
 
     private int dispenserCapacity;                  //aktualna pojemność dystrybutora [max 1000]
     private int dispenserID;                        //Unikalne ID dystrybutora
@@ -25,7 +23,7 @@ public class Distributor extends Thread {
 
     private int setRandomDispenserCapacity() {
         Random randomDispenserCapacity = new Random();
-        return randomDispenserCapacity.nextInt(1500) + 1500;
+        return randomDispenserCapacity.nextInt(50) + 50;
     }
 
     private void incrementID() {
@@ -77,7 +75,7 @@ public class Distributor extends Thread {
         }
     }
 
-    private synchronized void carService()  {
+    private synchronized void carService() {
         if (distributorQueues.isEmpty()) {
             WORK_STATUS = false;
         } else {
@@ -96,7 +94,7 @@ public class Distributor extends Thread {
         return distributorQueues;
     }
 
-    private void tankCar(Car c1, FuelSupplierService f1)  {
+    private void tankCar(Car c1, FuelSupplierService f1) {
         if (c1.getFuel() == 0) {
             while (c1.getFuel() != c1.getTankCapacity()) {
                 if (this.getDispenserCapacity() != 0) {
@@ -117,7 +115,7 @@ public class Distributor extends Thread {
                     e.printStackTrace();
                 }
                 System.out.println("TANKOWANIE - AKTUALNY STAN PALIWA SAMOCHODU: " + c1.getFuel() + ", samochod: " + c1.toString());
-                System.out.println("TANKOWANIE - AKTUALNY STAN DYSTRYBUTORA: " + this.getDispenserCapacity());
+                System.out.println("TANKOWANIE - AKTUALNY STAN DYSTRYBUTORA: " + this.getDispenserCapacity() + ", " + getDispenserID());
             }
         }
     }
